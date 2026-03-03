@@ -1,0 +1,45 @@
+# Values for deployment-custom
+nameOverride: ""
+fullnameOverride: ""
+
+# --- Storage / PVC (JuiceFS) ---
+pvName: "pv-example"
+pvcName: "pvc-example"
+serviceName: "service-example"
+namespace: "juicefs"
+deploymentId: "12345"
+username: "testuser"
+storageSize: "5Gi"
+storageClass: "juicefs-sc"
+volumeHandle: "jfs-volume"
+secretName: "juicefs-sc-secret"
+
+# --- Workload / Pod (YOLO API ONNX) ---
+appLabel: "yolo-api-onnx"
+
+# Docker image chạy YOLO ONNX API.
+image: "huythai855/yolo-api-onnx:latest"
+
+# Không override CMD của image, để uvicorn chạy bình thường.
+command: []
+arguments: []
+
+# Port HTTP mà container lắng nghe.
+containerPort: "8000"
+
+# Đường mount của PVC trong container (chứa model onnx).
+mountPath: "/models"
+
+# --- Environment variables for container ---
+# Có thể override / thêm env khi install:
+#   helm install ... --set envs.MY_KEY=my_value
+envs:
+  MODEL_PATH: "/models/yolo11n.onnx"
+  BACKEND: "onnx"
+
+# --- Resources ---
+cpuRequest: "200"
+cpuLimit: "1000"
+memoryRequest: "1" # in Gi
+memoryLimit: "1"   # in Gi
+gpuLimit: 0

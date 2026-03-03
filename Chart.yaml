@@ -1,0 +1,6 @@
+apiVersion: v2
+name: deployment-custom
+description: Helm chart for custom model deployments
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

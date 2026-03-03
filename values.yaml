@@ -14,18 +14,16 @@ storageClass: "juicefs-sc"
 volumeHandle: "jfs-volume"
 secretName: "juicefs-sc-secret"
 
-# --- Workload / Pod (YOLO API ONNX) ---
+# --- Workload / InferenceService (YOLO ONNX API) ---
 appLabel: "yolo-api-onnx"
 
-# Docker image chạy YOLO ONNX API.
+# Docker image chạy YOLO ONNX API (FastAPI).
 image: "huythai855/yolo-api-onnx:latest"
 
-# Không override CMD của image, để uvicorn chạy bình thường.
-command: []
-arguments: []
+# Không override CMD, để image tự chạy uvicorn.
 
 # Port HTTP mà container lắng nghe.
-containerPort: "8000"
+containerPort: 8000
 
 # Đường mount của PVC trong container (chứa model onnx).
 mountPath: "/models"
@@ -38,8 +36,8 @@ envs:
   BACKEND: "onnx"
 
 # --- Resources ---
-cpuRequest: "200"
-cpuLimit: "1000"
-memoryRequest: "1" # in Gi
-memoryLimit: "1"   # in Gi
+cpuRequest: "200m"
+cpuLimit: "1000m"
+memoryRequest: "1Gi" # in Gi
+memoryLimit: "2Gi"   # in Gi
 gpuLimit: 0
